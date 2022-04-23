@@ -5,4 +5,4 @@ export const apiUrl = axios.create({
 });
 
 export const apiKey =
-  process.env.REACT_APP_LOCATION_KEY ?? "Gsb9DTk0WmBISUeh8TM3AJcHjCzUrUtD";
+  process.env.REACT_APP_LOCATION_KEY ?? "KzwwJM2XK7r4BL3OzaanXiemxbiIDx7r";

@@ -1,46 +1,29 @@
-# Getting Started with Create React App
+# Vila Apps Weather
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+API source: http://dataservice.accuweather.com
 
-## Available Scripts
+## Api Key
 
-In the project directory, you can run:
+Please note that you need an api key to access this website. You can get one by having an account at Accuweather link above and creating an app.
 
-### `yarn start`
+After getting one, you can create an .env file and put it inside, following the .env.example
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Even if you do not do any oh this, there is a default key that will be used instead. However, due to limited amount of requests that can be made, you may need to have your own key in the future.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Search Input
 
-### `yarn test`
+It's highly recommended that you do not use this input that often since the api key will expire because of the limited amount of requests that can be made.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+There is a lock icon to prevent you from using it by accident. You can press the icon and unlock the input, so use this feature with caution as you may need to get another key because of that.
 
-### `yarn build`
+### City Presets
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The last city that was chosen by you will be saved into your local storage, so the next time you open this application there won't be any needs for searching again. If you have not selected one before, you will get Brasília by default.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Header and Menu
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The header is purely for visual intents, so it doens't have any major features as the options might suggest.
 
-### `yarn eject`
+### City Info
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Do not forget to click into your city title on all cards but the first one to acess a new link with further information.

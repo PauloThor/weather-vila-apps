@@ -40,9 +40,6 @@ const AutoComplete = ({ handleEvent }: Props) => {
           name: `${city.LocalizedName}, ${city.AdministrativeArea.ID}`,
         };
       });
-      console.log(text);
-      console.log("output", output);
-      console.log("res", res.data);
     }
     setList(output);
     setIsLoading(false);
