@@ -21,3 +21,12 @@ export interface TimeWeather {
   snow: string;
   wind: string;
 }
+
+export interface DailiesForecast {
+  time: string;
+  temperature: string;
+  icon: LogoProps;
+  weather: string;
+  link: string;
+  rain: string;
+}

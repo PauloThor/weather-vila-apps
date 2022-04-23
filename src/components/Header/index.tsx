@@ -14,8 +14,13 @@ import VilaLogo from "../../assets/img/vila-apps-logo.jpg";
 import { ImageLogo } from "./styles";
 import { useNavigate } from "react-router-dom";
 
-const pages = [{ name: "Home", redirect: "/" }];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = [
+  { name: "Home", redirect: "/" },
+  { name: "Perfil", redirect: "/profile" },
+  { name: "Conta", redirect: "/account" },
+  { name: "Dashboard", redirect: "/dashboard" },
+];
+const settings = ["Perfil", "Conta", "Dashboard", "Logout"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -119,7 +124,7 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Abrir configurações">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>

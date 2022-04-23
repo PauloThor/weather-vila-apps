@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Color } from "../../model/enums/theme-colors";
 
 export const Container = styled.div`
   display: flex;
@@ -10,8 +11,14 @@ export const TimeHeader = styled.div`
   width: 100%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  background: rgba(82, 113, 139, 1);
+  background: ${Color.BACKGROUND_SECONDARY};
   padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${Color.HIGHLIGHT};
+    transition: 0.5s;
+  }
 `;
 
 export const TimeContainer = styled.div`

@@ -4,4 +4,5 @@ export const apiUrl = axios.create({
   baseURL: "http://dataservice.accuweather.com",
 });
 
-export const apiKey = "Fr6uoaUrWIe29wOd5XKP058lFXBSKNJb";
+export const apiKey =
+  process.env.REACT_APP_LOCATION_KEY ?? "Gsb9DTk0WmBISUeh8TM3AJcHjCzUrUtD";

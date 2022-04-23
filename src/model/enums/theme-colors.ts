@@ -1,8 +1,9 @@
 export enum Color {
   MAIN_DARK = "#141414",
   MAIN = "#281528",
-  MAIN_LIGHT = "#432343",
-  SECONDARY = "#1B4DE4",
-  TEXT_SECONDARY = "#A4CCF4",
+  TEXT_SECONDARY = "#39adab",
   TEXT_MAIN = "#EDF5FD",
+  BACKGROUND_PRIMARY = "#003550",
+  BACKGROUND_SECONDARY = "rgba(82, 113, 139, 1)",
+  HIGHLIGHT = "#3c9abc",
 }

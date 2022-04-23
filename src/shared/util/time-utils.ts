@@ -5,6 +5,11 @@ class TimeUtils {
 
     return output;
   };
+
+  static getTimeDay = (date: string) => {
+    const output = date.slice(8, 10);
+    return output;
+  };
 }
 
 export default TimeUtils;

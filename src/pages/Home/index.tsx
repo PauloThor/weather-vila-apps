@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import AutoComplete from "../../components/AutoComplete";
-import Header from "../../components/Header";
+import Loading from "../../components/Loading";
 import MainCard from "../../components/MainCard";
 import MultipleCard from "../../components/MultipleCard";
 import TimeCard from "../../components/TimeCard";
 import { useCity } from "../../hooks/City";
 import { CurrentConditions } from "../../model/current-conditions";
-import { DailyForecast } from "../../model/daily-forecast";
+import { DailiesForecast, DailyForecast } from "../../model/daily-forecast";
+import { TimeTypes } from "../../model/enums/time-types";
 import { HourForecast } from "../../model/hour-forecast";
 import { Location } from "../../model/location";
 import { Container } from "./styles";
@@ -21,20 +22,27 @@ const Home = () => {
     useState<CurrentConditions>();
   const [dailyForecast, setDailyForecast] = useState<DailyForecast>();
   const [hourForecast, setHourForecast] = useState<HourForecast[]>([]);
-  const [location] = useState<Location>(initialLocation);
+  const [dailiesForecast, setDailiesForecast] = useState<DailiesForecast[]>([]);
+  const [location, setLocation] = useState<Location>(initialLocation);
   const [loading, setLoading] = useState<boolean>(false);
-  const { getCurrentConditions, getDailyForecast, getHoursForecast } =
-    useCity();
+  const {
+    getCurrentConditions,
+    getDailyForecast,
+    getHoursForecast,
+    getDailiesForecast,
+  } = useCity();
 
   const getInfo = async () => {
     setLoading(true);
     const conditions = await getCurrentConditions(location.key);
-    const dailyForecast = await getDailyForecast(location.key);
-    const hourForecast = await getHoursForecast(location.key);
+    const dailyInfo = await getDailyForecast(location.key);
+    const hourInfo = await getHoursForecast(location.key);
+    const dailiesInfo = await getDailiesForecast(location.key);
 
     setCurrentConditions(conditions);
-    setDailyForecast(dailyForecast);
-    setHourForecast(hourForecast);
+    setDailyForecast(dailyInfo);
+    setHourForecast(hourInfo);
+    setDailiesForecast(dailiesInfo);
     setLoading(false);
   };
 
@@ -43,16 +51,18 @@ const Home = () => {
     // eslint-disable-next-line
   }, [location]);
 
+  const handleLocation = (newLocation: Location) => {
+    setLocation(newLocation);
+    localStorage.setItem("locationName", newLocation.name);
+    localStorage.setItem("locationKey", newLocation.key);
+  };
+
   return (
     <>
-      <Header />
       <Container>
-        <button onClick={() => console.log(currentConditions)}>
-          aaaaaaaaaa
-        </button>
-        <button onClick={() => console.log(dailyForecast)}>bbbbbb</button>
         {!loading ? (
           <>
+            <AutoComplete handleEvent={handleLocation} />
             <MainCard
               location={location.name}
               weather={currentConditions?.weather ?? ""}
@@ -65,12 +75,17 @@ const Home = () => {
               day={dailyForecast?.day}
               night={dailyForecast?.night}
               location={location.name}
+              link={dailyForecast?.link}
             />
             <MultipleCard data={hourForecast} title="Previsão por hora" />
-            <AutoComplete />
+            <MultipleCard
+              data={dailiesForecast}
+              title="Previsão por dia"
+              type={TimeTypes.DAYS}
+            />
           </>
         ) : (
-          <div>Loading...</div>
+          <Loading />
         )}
       </Container>
     </>

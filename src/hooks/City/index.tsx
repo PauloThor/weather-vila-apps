@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 import { CurrentConditions } from "../../model/current-conditions";
-import { DailyForecast } from "../../model/daily-forecast";
+import { DailiesForecast, DailyForecast } from "../../model/daily-forecast";
 import { HourForecast, HourForecastComplete } from "../../model/hour-forecast";
 import { apiKey, apiUrl } from "../../services/api";
 
@@ -8,6 +8,7 @@ interface CityData {
   getCurrentConditions: (locationKey: string) => Promise<CurrentConditions>;
   getDailyForecast: (locationKey: string) => Promise<DailyForecast>;
   getHoursForecast: (locationKey: string) => Promise<HourForecast[]>;
+  getDailiesForecast: (locationKey: string) => Promise<DailiesForecast[]>;
 }
 
 interface CityProviderProps {
@@ -21,6 +22,8 @@ export const CityProvider = ({ children }: CityProviderProps) => {
     apikey: apiKey,
     language: "pt-br",
   };
+
+  const customParams = { ...params, details: true, metric: true };
 
   const getCurrentConditions = async (locationKey: string) => {
     const res = await apiUrl.get(`/currentconditions/v1/${locationKey}`, {
@@ -37,7 +40,6 @@ export const CityProvider = ({ children }: CityProviderProps) => {
   };
 
   const getDailyForecast = async (locationKey: string) => {
-    const customParams = { ...params, metric: true, details: true };
     const res = await apiUrl.get(`/forecasts/v1/daily/1day/${locationKey}`, {
       params: customParams,
     });
@@ -76,7 +78,6 @@ export const CityProvider = ({ children }: CityProviderProps) => {
   };
 
   const getHoursForecast = async (locationKey: string) => {
-    const customParams = { ...params, metric: true };
     const res = await apiUrl.get(`/forecasts/v1/hourly/12hour/${locationKey}`, {
       params: customParams,
     });
@@ -88,6 +89,28 @@ export const CityProvider = ({ children }: CityProviderProps) => {
         temperature: item.Temperature.Value + "º",
         time: item.DateTime,
         link: item.Link,
+        rain: item.RainProbability + "%",
+      };
+    });
+
+    return output;
+  };
+
+  const getDailiesForecast = async (locationKey: string) => {
+    const res = await apiUrl.get(`/forecasts/v1/daily/5day/${locationKey}`, {
+      params: customParams,
+    });
+
+    const output = res.data.DailyForecasts.map((item: any) => {
+      const sum =
+        item.Temperature.Minimum.Value + item.Temperature.Maximum.Value;
+      return {
+        time: item.Date,
+        temperature: `${(sum / 2).toFixed(2)} º`,
+        icon: item.Day.Icon,
+        weather: item.Day.IconPhrase,
+        link: res.data.Headline.Link,
+        rain: item.Day.RainProbability + "%",
       };
     });
 
@@ -96,7 +119,12 @@ export const CityProvider = ({ children }: CityProviderProps) => {
 
   return (
     <CityContext.Provider
-      value={{ getCurrentConditions, getDailyForecast, getHoursForecast }}
+      value={{
+        getCurrentConditions,
+        getDailyForecast,
+        getHoursForecast,
+        getDailiesForecast,
+      }}
     >
       {children}
     </CityContext.Provider>

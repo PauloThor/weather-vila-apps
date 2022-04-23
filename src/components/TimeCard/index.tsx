@@ -1,4 +1,5 @@
 import { TimeWeather } from "../../model/daily-forecast";
+import CityUtils from "../../shared/util/city-utils";
 import ImageUtils from "../../shared/util/image-utils";
 import {
   Container,
@@ -12,12 +13,13 @@ interface Props {
   day?: TimeWeather;
   night?: TimeWeather;
   location?: string;
+  link?: string;
 }
 
-const TimeCard = ({ day, night, location }: Props) => {
+const TimeCard = ({ day, night, location, link }: Props) => {
   return (
     <Container className="container">
-      <TimeHeader>
+      <TimeHeader onClick={() => CityUtils.OpenTab(link ?? "")}>
         <h2>Previsão para hoje para {location}</h2>
       </TimeHeader>
       <TimeContainer>

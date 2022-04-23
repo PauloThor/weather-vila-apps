@@ -14,6 +14,7 @@ export interface HourForecastComplete {
   PrecipitationProbability: number;
   MobileLink: string;
   Link: string;
+  RainProbability: number;
 }
 
 export interface HourForecast {
@@ -22,4 +23,5 @@ export interface HourForecast {
   weather: string;
   time: string;
   temperature: string;
+  rain: string;
 }

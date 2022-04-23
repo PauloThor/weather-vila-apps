@@ -1,11 +1,19 @@
 import { useState } from "react";
+import { Location } from "../../model/location";
 import { apiKey, apiUrl } from "../../services/api";
+import CityUtils from "../../shared/util/city-utils";
+import { AiFillLock } from "react-icons/ai";
+import { Container, Item, Items, Tag, Tags } from "./styles";
 
-const AutoComplete = () => {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+interface Props {
+  handleEvent: (location: Location) => void;
+}
+
+const AutoComplete = ({ handleEvent }: Props) => {
   const [value, setValue] = useState<string>("");
   const [list, setList] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLocked, setIsLocked] = useState<boolean>(true);
 
   const getData = async (text: string) => {
     setIsLoading(true);
@@ -32,7 +40,7 @@ const AutoComplete = () => {
           name: `${city.LocalizedName}, ${city.AdministrativeArea.ID}`,
         };
       });
-      console.log(value);
+      console.log(text);
       console.log("output", output);
       console.log("res", res.data);
     }
@@ -40,44 +48,52 @@ const AutoComplete = () => {
     setIsLoading(false);
   };
 
-  const validationProps = {
-    isFocused,
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     getData(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter" && isFocused) {
-      e.preventDefault();
-      setList([]);
-      // set Nova Cidade
-      return;
-    }
+  const handleLock = () => {
+    setIsLocked(!isLocked);
+    setList([]);
   };
+
   return (
-    <div>
+    <Container className="container">
+      <Tags>
+        {CityUtils.Cities.map((city, index) => {
+          return (
+            <Tag
+              key={`${city.name}-${index}`}
+              onClick={() => handleEvent(city)}
+            >
+              {city.name}
+            </Tag>
+          );
+        })}
+      </Tags>
       <input
         value={value}
+        autoComplete="off"
         id="autocomplete"
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
           handleChange(evt)
         }
-        onKeyPress={handleKeyPress}
+        disabled={isLocked}
       />
-    </div>
+      <AiFillLock
+        size={25}
+        onClick={handleLock}
+        color={isLocked ? "lightblue" : "white"}
+      />
+      {!isLoading && (
+        <Items>
+          {list.map((item) => {
+            return <Item onClick={() => handleEvent(item)}>{item.name}</Item>;
+          })}
+        </Items>
+      )}
+    </Container>
   );
 };
 
