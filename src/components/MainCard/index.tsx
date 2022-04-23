@@ -19,7 +19,7 @@ const MainCard = ({
   icon,
 }: Props) => {
   return (
-    <Container>
+    <Container className="container">
       <Header>
         <p> {location} </p>
       </Header>

@@ -3,17 +3,14 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 768px;
   background-color: #000000;
-  margin: 10px 0;
-  border-radius: 15px;
 `;
 
 export const TimeHeader = styled.div`
   width: 100%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
-  background: gray;
+  background: rgba(82, 113, 139, 1);
   padding: 10px;
 `;
 

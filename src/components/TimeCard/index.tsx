@@ -16,7 +16,7 @@ interface Props {
 
 const TimeCard = ({ day, night, location }: Props) => {
   return (
-    <Container>
+    <Container className="container">
       <TimeHeader>
         <h2>Previsão para hoje para {location}</h2>
       </TimeHeader>

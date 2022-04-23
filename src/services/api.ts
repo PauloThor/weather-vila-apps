@@ -4,4 +4,4 @@ export const apiUrl = axios.create({
   baseURL: "http://dataservice.accuweather.com",
 });
 
-export const apiKey = "wK86GjeZs7Mn17Oy1AJIxhRv2C6kDPmV";
+export const apiKey = "Fr6uoaUrWIe29wOd5XKP058lFXBSKNJb";

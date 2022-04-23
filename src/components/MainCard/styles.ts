@@ -8,8 +8,6 @@ export const Container = styled.div`
     rgba(54, 162, 184, 1) 50%,
     rgba(33, 81, 130, 1) 100%
   );
-  border-radius: 15px;
-  width: 768px;
 `;
 
 export const Header = styled.div`

@@ -12,7 +12,14 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: ${Color.MAIN_DARK};
+        background: rgb(107, 204, 200);
+        background: linear-gradient(
+        180deg,
+        rgba(107, 204, 200, 1) 0%,
+        rgba(78, 146, 185, 1) 50%,
+        rgba(32, 75, 136, 1) 100%
+        );
+        min-height: 100vh;
         color: ${Color.TEXT_MAIN};
 
         &::-webkit-scrollbar {
@@ -45,4 +52,9 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
     }
 
+    .container {
+        border-radius: 15px;
+        width: 768px;
+        margin: 10px auto;
+    }
 `;

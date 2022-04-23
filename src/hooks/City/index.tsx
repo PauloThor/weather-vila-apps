@@ -1,9 +1,13 @@
 import { createContext, ReactNode, useContext } from "react";
+import { CurrentConditions } from "../../model/current-conditions";
+import { DailyForecast } from "../../model/daily-forecast";
+import { HourForecast, HourForecastComplete } from "../../model/hour-forecast";
 import { apiKey, apiUrl } from "../../services/api";
 
 interface CityData {
-  getCurrentConditions: (locationKey: string) => any;
-  getDailyForecast: (locationKey: string) => any;
+  getCurrentConditions: (locationKey: string) => Promise<CurrentConditions>;
+  getDailyForecast: (locationKey: string) => Promise<DailyForecast>;
+  getHoursForecast: (locationKey: string) => Promise<HourForecast[]>;
 }
 
 interface CityProviderProps {
@@ -71,8 +75,29 @@ export const CityProvider = ({ children }: CityProviderProps) => {
     return output;
   };
 
+  const getHoursForecast = async (locationKey: string) => {
+    const customParams = { ...params, metric: true };
+    const res = await apiUrl.get(`/forecasts/v1/hourly/12hour/${locationKey}`, {
+      params: customParams,
+    });
+
+    const output = res.data.slice(0, 5).map((item: HourForecastComplete) => {
+      return {
+        icon: item.WeatherIcon,
+        weather: item.IconPhrase,
+        temperature: item.Temperature.Value + "º",
+        time: item.DateTime,
+        link: item.Link,
+      };
+    });
+
+    return output;
+  };
+
   return (
-    <CityContext.Provider value={{ getCurrentConditions, getDailyForecast }}>
+    <CityContext.Provider
+      value={{ getCurrentConditions, getDailyForecast, getHoursForecast }}
+    >
       {children}
     </CityContext.Provider>
   );
